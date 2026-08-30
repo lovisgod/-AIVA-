@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIVA - Executive Presentation Deck | The Adorned International</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0A192F;
+      --navy-light: #112240;
+      --navy-card: #1E293B;
+      --gold: #D4AF37;
+      --gold-hover: #F3E5AB;
+      --slate: #334155;
+      --light-bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --border: #E2E8F0;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --accent-blue: #3B82F6;
+      --accent-green: #10B981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #020C1B;
+      color: var(--text-main);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .deck-container {
+      flex: 1;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      max-width: 1280px;
+      height: 720px;
+      background: var(--light-bg);
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      padding: 36px 44px;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0.98);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .slide.dark-theme {
+      background: var(--navy);
+      color: #FFFFFF;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    .slide.dark-theme .slide-header {
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .tracker-tag {
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .slide-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .slide.dark-theme .slide-title {
+      color: #FFFFFF;
+    }
+
+    .church-logo-badge {
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      gap: 20px;
+    }
+
+    .card-grid {
+      display: grid;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .grid-2 {
+      grid-template-columns: 1fr 1.2fr;
+    }
+
+    .grid-2-equal {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .slide.dark-theme .card {
+      background: var(--navy-light);
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+    }
+
+    .card-img-bottom {
+      width: calc(100% + 40px);
+      margin: 14px -20px -20px -20px;
+      height: 140px;
+      object-fit: cover;
+      border-top: 2px solid var(--gold);
+    }
+
+    .card-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .slide.dark-theme .card-title {
+      color: #FFFFFF;
+    }
+
+    .card-text {
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--slate);
+    }
+
+    .slide.dark-theme .card-text {
+      color: #94A3B8;
+    }
+
+    .metric-box {
+      background: rgba(10, 25, 47, 0.04);
+      border-left: 4px solid var(--gold);
+      padding: 14px;
+      border-radius: 6px;
+      margin-top: 12px;
+    }
+
+    .slide.dark-theme .metric-box {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .metric-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .slide.dark-theme .metric-val {
+      color: var(--gold);
+    }
+
+    .metric-lbl {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .slide.dark-theme .slide-footer {
+      border-top-color: rgba(255, 255, 255, 0.1);
+      color: #64748B;
+    }
+
+    .controls-bar {
+      height: 60px;
+      background: #0A192F;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      color: #FFFFFF;
+    }
+
+    .nav-btns {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--gold);
+      color: var(--navy);
+      border-color: var(--gold);
+    }
+
+    .slide-counter {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+
+    th {
+      background: var(--navy);
+      color: #FFFFFF;
+      font-weight: 600;
+      text-align: left;
+      padding: 10px 14px;
+    }
+
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--slate);
+    }
+
+    tr:nth-child(even) td {
+      background: #F1F5F9;
+    }
+
+    .hero-title-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 40px;
+    }
+
+    .hero-gold-bar {
+      width: 60px;
+      height: 6px;
+      background: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1.15;
+      color: #FFFFFF;
+      margin-bottom: 16px;
+    }
+
+    .hero-subtitle {
+      font-size: 19px;
+      color: #94A3B8;
+      margin-bottom: 32px;
+      max-width: 850px;
+      line-height: 1.5;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="deck-container">
+
+    <!-- SLIDE 1: TITLE -->
+    <div class="slide dark-theme active" id="slide-1">
+      <div class="hero-title-container">
+        <div class="hero-gold-bar"></div>
+        <div class="tracker-tag">THE ADORNED INTERNATIONAL</div>
+        <h1 class="hero-title">Enterprise & Innovation<br>Acceleration Initiative (AIVA)</h1>
+        <p class="hero-subtitle">Tier-1 Strategic Business Case & Masterplan | Target Showcase: December 2026</p>
+        <div class="hero-meta">
+          <span>Senior Pastoral Advisory Board Oversight</span>
+          <span>•</span>
+          <span>McKinsey / Mastercard Framework</span>
+          <span>•</span>
+          <span>August 2026</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Confidential & Proprietary</span>
+        <span>The Adorned International Advisory Board</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: EXECUTIVE SUMMARY -->
+    <div class="slide" id="slide-2">
+      <div class="slide-header">
+        <div>
+          <div class="tracker-tag">EXECUTIVE SUMMARY</div>
+          <h2 class="slide-title">Transforming Business Ideas into Kingdom Assets</h2>
+        </div>
+        <div class="church-logo-badge">THE ADORNED INTERNATIONAL</div>
+      </div>
+      <div class="slide-body">
+        <div class="card-grid grid-3">
+          <div class="card">
+            <div>
+              <div class="card-number">01 / STRATEGIC VISION</div>
+              <h3 class="card-title">Structured Enterprise Training</h3>
+              <p class="card-text">AIVA bridges the gap from raw idea to commercially sustainable enterprise through an
+                intensive annual 4-stage pipeline under Senior Pastoral Governance.</p>
+            </div>
+            <div class="metric-box">
+              <div class="metric-val">80% / 20%</div>
+              <div class="metric-lbl">Church vs External Allocation</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="card-number">02 / CAPITAL ALLOCATION</div>
+              <h3 class="card-title">December 2026 Seed Capital</h3>
+              <p class="card-text">Graduating entrepreneurs pitch before Pastoral Leadership and 'Kingdom Angels' to win
+                non-predatory seed grants to launch proof-of-concept.</p>
+            </div>
+            <div class="metric-box">
+              <div class="metric-val">₦6,500,000</div>
+              <div class="metric-lbl">Demo Day Seed Grant Pool</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="card-number">03 / INCUBATION ECOSYSTEM</div>
+              <h3 class="card-title">6-Month Top 5 Acceleration</h3>
+              <p class="card-text">The top 5 emerging ventures transition into an intensive incubator providing C-suite
+                mentorship, legal/tax formalization, workspace access, and milestone audits.</p>
+            </div>
+            <div class="metric-box">
+              <div class="metric-val">6 Months</div>
+              <div class="metric-lbl">C-Suite Executive Mentorship</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AIVA Strategic Blueprint</span>
+        <span>Slide 2 of 9</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: MCKINSEY 3-HORIZON GROWTH MODEL -->
+    <div class="slide" id="slide-3">
+      <div class="slide-header">
+        <div>
+          <div class="tracker-tag">GROWTH STRATEGY</div>
+          <h2 class="slide-title">McKinsey 3-Horizon Growth Framework</h2>
+        </div>
+        <div class="church-logo-badge">STRATEGIC ARCHITECTURE</div>
+      </div>
+      <div class="slide-body">
+        <div class="card-grid grid-3">
+          <div class="card">
+            <div>
+              <div class="card-number">HORIZON 1 • 2026</div>
+              <h3 class="card-title">Seed & Formalization</h3>
+              <p class="card-text">• Launch Cohort 1 Intake (Sep 2026)<br>• 6-Week Enterprise Bootcamp<br>• December
+                2026 Demo Day<br>• CAC & Legal Formalization for Top 5</p>
+            </div>
+            <img src="assets/bootcamp.jpg" alt="African Business Bootcamp" class="card-img-bottom">
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="card-number">HORIZON 2 • 2027</div>
+              <h3 class="card-title">Commercial Integration</h3>
+              <p class="card-text">• Integrate Top 5 into Church Supply Chains<br>• Activate 10% Profit Payback
+                Model<br>• Expand Mentorship Network to 20+ Leaders<br>• Launch Cohort 2 Intake</p>
+            </div>
+            <img src="assets/innovation_hub.jpg" alt="African Innovation Hub" class="card-img-bottom">
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="card-number">HORIZON 3 • 2028+</div>
+              <h3 class="card-title">Kingdom Venture Fund</h3>
+              <p class="card-text">• Scale Capital Pool to ₦50M+ with Impact Partners<br>• Evergreen Revolving Capital
+                Pool<br>• Regional Replication in Partner Churches<br>• Self-Sustaining Venture Ecosystem</p>
+            </div>
+            <img src="assets/mentorship.jpg" alt="Kingdom Venture Fund" class="card-img-bottom">
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AIVA Strategic Blueprint</span>
+        <span>Slide 3 of 9</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: PROGRAM ARCHITECTURE -->
+    <div class="slide" id="slide-4">
+      <div class="slide-header">
+        <div>
+          <div class="tracker-tag">PROGRAM PIPELINE</div>
+          <h2 class="slide-title">The 4-Stage Annual Accelerator Workflow</h2>
+        </div>
+        <div class="church-logo-badge">OPERATIONAL WORKFLOW</div>
+      </div>
+      <div class="slide-body">
+        <div class="card-grid grid-4">
+          <div class="card">
+            <div>
+              <div class="card-number">STAGE 1 • SEP 2026</div>
+              <h3 class="card-title">Intake & Vetting</h3>
+              <p class="card-text">• Online Application Portal<br>• 80% Church / 20% External<br>• 100-Pt Vetting
+                Matrix<br>• Desktop Due Diligence</p>
+            </div>
+            <img src="assets/innovation_hub.jpg" alt="Application Screening" class="card-img-bottom"
+              style="height: 120px;">
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="card-number">STAGE 2 • OCT-NOV 2026</div>
+              <h3 class="card-title">Enterprise Bootcamp</h3>
+              <p class="card-text">• Business Model Canvas<br>• Unit Economics & Pricing<br>• CAC & Tax
+                Formalization<br>• Pitch Coaching Masterclass</p>
+            </div>
+            <img src="assets/bootcamp.jpg" alt="Enterprise Bootcamp" class="card-img-bottom" style="height: 120px;">
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="card-number">STAGE 3 • DEC 2026</div>
+              <h3 class="card-title">Demo Day Showcase</h3>
+              <p class="card-text">• Executive Live Pitch Event<br>• 1st Place: ₦5,000,000<br>• 2nd Place:
+                ₦1,000,000<br>• 3rd Place: ₦500,000</p>
+            </div>
+            <img src="assets/demo_day.jpg" alt="Demo Day Showcase" class="card-img-bottom" style="height: 120px;">
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="card-number">STAGE 4 • JAN-JUN 2027</div>
+              <h3 class="card-title">Top 5 Incubation</h3>
+              <p class="card-text">• C-Suite Mentor Matching<br>• CAC Corporate Setup<br>• Workspace & Tool Credits<br>•
+                Milestone Tranche Audits</p>
+            </div>
+            <img src="assets/mentorship.jpg" alt="Top 5 Incubation" class="card-img-bottom" style="height: 120px;">
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AIVA Strategic Blueprint</span>
+        <span>Slide 4 of 9</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: BUDGET -->
+    <div class="slide" id="slide-5">
+      <div class="slide-header">
+        <div>
+          <div class="tracker-tag">CAPITAL BUDGET</div>
+          <h2 class="slide-title">Annual Cohort Budget: ₦14,000,000 Allocation</h2>
+        </div>
+        <div class="church-logo-badge">FINANCIAL MODEL</div>
+      </div>
+      <div class="slide-body">
+        <div class="card-grid grid-2">
+          <div class="card dark-theme" style="background: var(--navy);">
+            <div>
+              <div class="card-number">BUDGET SUMMARY</div>
+              <h3 class="card-title" style="color: var(--gold); font-size: 24px;">₦14,000,000</h3>
+              <p class="card-text" style="color: #94A3B8;">Total Annual Capital Requirement for Program Operations, Seed
+                Funding & 6-Month Incubation.</p>
+            </div>
+            <div style="margin-top: 20px;">
+              <div style="margin-bottom: 12px;">
+                <div style="font-size: 11px; color: var(--gold); font-weight: 700; text-transform: uppercase;">Seed
+                  Grants Pool (December Demo Day)</div>
+                <div style="font-size: 18px; font-weight: 700; color: #FFF;">₦6,500,000 (46.4%)</div>
+              </div>
+              <div>
+                <div style="font-size: 11px; color: var(--gold); font-weight: 700; text-transform: uppercase;">Bootcamp,
+                  Event & Incubation Ops</div>
+                <div style="font-size: 18px; font-weight: 700; color: #FFF;">₦7,500,000 (53.6%)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Expense Category</th>
+                  <th style="text-align: right;">Amount (NGN)</th>
+                  <th style="text-align: right;">% Allocation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Seed Funding Grants Pool (Top 1-3)</strong></td>
+                  <td style="text-align: right; font-weight: 700;">₦6,500,000</td>
+                  <td style="text-align: right;">46.4%</td>
+                </tr>
+                <tr>
+                  <td>Bootcamp Training & Workshop Facilitation</td>
+                  <td style="text-align: right;">₦2,200,000</td>
+                  <td style="text-align: right;">15.7%</td>
+                </tr>
+                <tr>
+                  <td>December Demo Day Production, Venue & Media</td>
+                  <td style="text-align: right;">₦2,500,000</td>
+                  <td style="text-align: right;">17.9%</td>
+                </tr>
+                <tr>
+                  <td>Incubation Operations & Legal/Tax Advisory (6 Mo)</td>
+                  <td style="text-align: right;">₦1,800,000</td>
+                  <td style="text-align: right;">12.9%</td>
+                </tr>
+                <tr>
+                  <td>Admin, Branding & Contingency Reserve</td>
+                  <td style="text-align: right;">₦1,000,000</td>
+                  <td style="text-align: right;">7.1%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AIVA Strategic Blueprint</span>
+        <span>Slide 5 of 9</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: SOURCING STRATEGY -->
+    <div class="slide" id="slide-6">
+      <div class="slide-header">
+        <div>
+          <div class="tracker-tag">CAPITAL SOURCING</div>
+          <h2 class="slide-title">4-Pillar Funding Architecture</h2>
+        </div>
+        <div class="church-logo-badge">PARTNERSHIP BLUEPRINT</div>
+      </div>
+      <div class="slide-body">
+        <div class="card-grid grid-2-equal">
+          <div class="card">
+            <div class="card-number">PILLAR 1 • 25% ALLOCATION</div>
+            <h3 class="card-title">Church Empowerment Fund</h3>
+            <p class="card-text"><strong>₦3,500,000</strong> allocated directly from church benevolence and community
+              development reserves as an institutional anchor.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-number">PILLAR 2 • 36% ALLOCATION</div>
+            <h3 class="card-title">'Kingdom Angels' Network</h3>
+            <p class="card-text"><strong>₦5,000,000</strong> raised from high-net-worth congregation members committing
+              ₦500,000 – ₦1,000,000 each to fund seed prizes.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-number">PILLAR 3 • 32% ALLOCATION</div>
+            <h3 class="card-title">Corporate CSR & Sponsorships</h3>
+            <p class="card-text"><strong>₦4,500,000</strong> co-sponsored by commercial banks, fintechs, telecom, and
+              corporate organizations seeking community impact.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-number">PILLAR 4 • 7% ALLOCATION</div>
+            <h3 class="card-title">Commitment Tokens</h3>
+            <p class="card-text"><strong>₦1,000,000</strong> generated via nominal application fee (₦10,000 per
+              business) to ensure high applicant intent and fund initial screening.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AIVA Strategic Blueprint</span>
+        <span>Slide 6 of 9</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: GOVERNANCE (WITH IMAGES) -->
+    <div class="slide" id="slide-7">
+      <div class="slide-header">
+        <div>
+          <div class="tracker-tag">GOVERNANCE & LEADERSHIP</div>
+          <h2 class="slide-title">Senior Pastoral Advisory Board & FIC Structure</h2>
+        </div>
+        <div class="church-logo-badge">GOVERNANCE MODEL</div>
+      </div>
+      <div class="slide-body">
+        <div class="card-grid grid-3">
+          <div class="card">
+            <div>
+              <div class="card-number">01 • BOARD OVERSIGHT</div>
+              <h3 class="card-title">Senior Pastoral Advisory Board</h3>
+              <p class="card-text">• Ultimate vision alignment & stewardship<br>• Final fund disbursement approval<br>•
+                Ethical leadership governance<br>• Strategic policy direction</p>
+            </div>
+            <img src="assets/pastoral_board.jpg" alt="Senior Pastoral Advisory Board" class="card-img-bottom">
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="card-number">02 • VETTING & SELECTION</div>
+              <h3 class="card-title">Fund Investment Committee (FIC)</h3>
+              <p class="card-text">• Senior corporate & finance executives<br>• Pitch evaluation at December Demo
+                Day<br>• Milestone tranche disbursement<br>• Portfolio compliance audits</p>
+            </div>
+            <img src="assets/investment_committee.jpg" alt="Fund Investment Committee" class="card-img-bottom">
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="card-number">03 • EXECUTION</div>
+              <h3 class="card-title">Incubation Operations Team</h3>
+              <p class="card-text">• Program Director & Lead Mentors<br>• 6-week bootcamp delivery<br>• CAC corporate
+                registration & tax setup<br>• Quarterly milestone reporting</p>
+            </div>
+            <img src="assets/mentorship.jpg" alt="Incubation Operations Team" class="card-img-bottom">
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AIVA Strategic Blueprint</span>
+        <span>Slide 7 of 9</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: 4-PILLAR ROI (WITH IMAGES) -->
+    <div class="slide" id="slide-8">
+      <div class="slide-header">
+        <div>
+          <div class="tracker-tag">BALANCED SCORECARD</div>
+          <h2 class="slide-title">4-Pillar Impact & Return Framework</h2>
+        </div>
+        <div class="church-logo-badge">IMPACT MATRIX</div>
+      </div>
+      <div class="slide-body">
+        <div class="card-grid grid-4">
+          <div class="card">
+            <div>
+              <div class="card-number">01 • FINANCIAL ROI</div>
+              <h3 class="card-title">Tithe & Revolving Fund</h3>
+              <p class="card-text">• Projected ₦6M/yr tithes by Year 3.<br>• 10% profit payback into Seed Fund starting
+                Month 18.</p>
+            </div>
+            <img src="assets/innovation_hub.jpg" alt="Financial ROI" class="card-img-bottom" style="height: 120px;">
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="card-number">02 • SOCIAL ROI</div>
+              <h3 class="card-title">Job Creation</h3>
+              <p class="card-text">• 15–30 direct jobs created in Cohort 1; 40+ indirect jobs.<br>• Household income
+                elevation.</p>
+            </div>
+            <img src="assets/economic_impact.jpg" alt="Job Creation Social Impact" class="card-img-bottom"
+              style="height: 120px;">
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="card-number">03 • BRAND ROI</div>
+              <h3 class="card-title">Institutional Distinction</h3>
+              <p class="card-text">• Positions church as socio-economic hub.<br>• Unlocks strategic corporate
+                partnerships.</p>
+            </div>
+            <img src="assets/demo_day.jpg" alt="Institutional Brand Impact" class="card-img-bottom"
+              style="height: 120px;">
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="card-number">04 • KINGDOM ROI</div>
+              <h3 class="card-title">Marketplace Ethics</h3>
+              <p class="card-text">• Ethical Christian business leaders.<br>• 20% external slot attracts community
+                founders.</p>
+            </div>
+            <img src="assets/pastoral_board.jpg" alt="Kingdom ROI Marketplace Ministry" class="card-img-bottom"
+              style="height: 120px;">
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AIVA Strategic Blueprint</span>
+        <span>Slide 8 of 9</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: ACTION PLAN -->
+    <div class="slide dark-theme" id="slide-9">
+      <div class="slide-header">
+        <div>
+          <div class="tracker-tag">ACTION PLAN</div>
+          <h2 class="slide-title" style="color: #FFF;">Leadership Roadmap (Target: December 2026 Demo Day)</h2>
+        </div>
+        <div class="church-logo-badge">EXECUTION ROADMAP</div>
+      </div>
+      <div class="slide-body">
+        <div class="card-grid grid-2-equal">
+          <div class="card" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);">
+            <div class="card-number">STEP 1 • AUG 2026</div>
+            <h3 class="card-title" style="color: var(--gold);">Pastoral Board Ratification</h3>
+            <p class="card-text" style="color: #CBD5E1;">Formally adopt AIVA as an official economic empowerment
+              initiative of The Adorned International.</p>
+          </div>
+
+          <div class="card" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);">
+            <div class="card-number">STEP 2 • SEP 2026</div>
+            <h3 class="card-title" style="color: var(--gold);">'Kingdom Angels' Breakfast</h3>
+            <p class="card-text" style="color: #CBD5E1;">Convene high-net-worth church members to secure ₦5,000,000 in
+              anchor seed capital commitments.</p>
+          </div>
+
+          <div class="card" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);">
+            <div class="card-number">STEP 3 • OCT - NOV 2026</div>
+            <h3 class="card-title" style="color: var(--gold);">Enterprise Bootcamp</h3>
+            <p class="card-text" style="color: #CBD5E1;">Conduct 6-week intensive training and C-suite mentor pairings
+              for 30 shortlisted entrepreneurs.</p>
+          </div>
+
+          <div class="card" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);">
+            <div class="card-number">STEP 4 • DEC 2026</div>
+            <h3 class="card-title" style="color: var(--gold);">Inaugural Demo Day</h3>
+            <p class="card-text" style="color: #CBD5E1;">Host flagship competition showcase in December 2026 and
+              disburse ₦6.5M in seed grants.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AIVA Strategic Blueprint</span>
+        <span>Slide 9 of 9</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="controls-bar">
+    <div>
+      <strong>The Adorned International</strong> — Enterprise Acceleration Masterplan (December 2026 Target)
+    </div>
+    <div class="nav-btns">
+      <button class="btn" id="prev-btn" onclick="changeSlide(-1)">← Previous</button>
+      <span class="slide-counter" id="slide-indicator">Slide 1 / 9</span>
+      <button class="btn" id="next-btn" onclick="changeSlide(1)">Next →</button>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 9;
+
+    function showSlide(index) {
+      if (index < 1) index = 1;
+      if (index > totalSlides) index = totalSlides;
+
+      document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+      document.getElementById(`slide-${index}`).classList.add('active');
+
+      currentSlide = index;
+      document.getElementById('slide-indicator').innerText = `Slide ${currentSlide} / ${totalSlides}`;
+
+      document.getElementById('prev-btn').style.opacity = currentSlide === 1 ? '0.5' : '1';
+      document.getElementById('next-btn').style.opacity = currentSlide === totalSlides ? '0.5' : '1';
+    }
+
+    function changeSlide(direction) {
+      showSlide(currentSlide + direction);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        changeSlide(1);
+      } else if (e.key === 'ArrowLeft') {
+        changeSlide(-1);
+      }
+    });
+  </script>
+</body>
+
+</html>
